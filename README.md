@@ -93,6 +93,26 @@ Version Control: Git & GitHub
 
 👉 http://127.0.0.1:8000/
 
+
+## Installed Packages
+
+The following Laravel packages are used in this project:
+
+📄 barryvdh/laravel-dompdf — Generate PDF reports
+🖼 intervention/image — Image processing and manipulation
+🤖 openai-php/laravel — OpenAI API integration
+
+
+## Install Dependencies
+
+Run the following commands:
+
+composer require barryvdh/laravel-dompdf
+composer require intervention/image
+composer require openai-php/laravel
+
+
+
 ⚙️ Installation
 1️⃣ Clone the repository
 git clone https://github.com/alawoddin/studentproject.git
