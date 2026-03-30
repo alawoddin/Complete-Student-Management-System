@@ -63,7 +63,7 @@
             <div class="dropdown-menu dropdown-menu-end">
                 
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="{{ route('index') }}"><i
+                <a class="dropdown-item text-danger" href="{{ route('teacher.logout') }}"><i
                         class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
             </div>
         </div>

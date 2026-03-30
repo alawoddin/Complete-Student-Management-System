@@ -164,6 +164,19 @@ public function teacherLogin(Request $request)
     
     //end mehod
 
+    public function destroy(Request $request)
+{
+    Auth::guard('teacher')->logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/teacher/login');
+}
+
+
+
+
 
 }
 

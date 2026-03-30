@@ -59,6 +59,10 @@ Route::middleware('auth:teacher')->group(function () {
     // Teacher view
     Route::get('/teacher/view/{id}', [TeachersController::class, 'TeacherView'])
         ->name('teacher.view');
+
+    Route::get('/teacher/logout', [TeachersController::class, 'destroy'])
+    ->name('teacher.logout');
+
 });
 
 
