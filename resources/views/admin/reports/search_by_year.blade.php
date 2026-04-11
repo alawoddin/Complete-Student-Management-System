@@ -88,7 +88,7 @@
     </div>
 
     @php
-        $paids = App\Models\Paid::sum('paid');
+        $paids = $orderYear->sum('paid');
     @endphp
     <div class="report-section">
         <div class="section-title"><i class="fas fa-briefcase"></i> All Student Info</div>
@@ -114,7 +114,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($Paid as $key => $item)
+                @foreach ($orderYear as $key => $item)
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $item->student->name }}</td>
@@ -152,23 +152,22 @@
                     <th>percentage</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($teacher as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $item->first_name }}</td>
-                        <td>{{ $item->last_name }}</td>
-                        <td>{{ $item->father_name }}</td>
-                        <td>{{ $item->roll_id }}</td>
-                        <td>{{ $item->email }}</td>
-                        <td>{{ $item->phone }}</td>
-                        <td>{{ $item->department->depart_name }}</td>
-                        <td>{{ $item->national_id }}</td>
-                        <td>{{ $item->percentage }}</td>
-                        {{-- <td>{{ number_format($paids, 2) }} AFG</td> --}}
-                    </tr>
-                @endforeach
-            </tbody>
+         <tbody>
+    @foreach ($teacher as $key => $item)
+        <tr>
+            <td>{{ $key + 1 }}</td>
+            <td>{{ $item->first_name }}</td>
+            <td>{{ $item->last_name }}</td>
+            <td>{{ $item->father_name }}</td>
+            <td>{{ $item->roll_id }}</td>
+            <td>{{ $item->email }}</td>
+            <td>{{ $item->phone }}</td>
+            <td>{{ $item->department->depart_name }}</td>
+            <td>{{ $item->national_id }}</td>
+            <td>{{ $item->percentage }}</td>
+        </tr>
+    @endforeach
+</tbody>
         </table>
     </div>
 
@@ -234,7 +233,6 @@
             </tbody>
         </table>
     </div>
-
     @php
         $total = App\Models\Expense::sum('amount');
         $totalPaid = App\Models\Paid::sum('paid');

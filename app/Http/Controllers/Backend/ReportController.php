@@ -44,18 +44,35 @@ class ReportController extends Controller
 }
 
 public function AdminSearchByYear(Request $request){
+
+    // ✅ validation
+    $request->validate([
+        'year' => 'required'
+    ]);
+
     $years = $request->year;
 
-    $Paid = Paid::with('student' ,  'department')->get();
-    $teacher = Teacher::with('department')->get();
-    $expense = Expense::with('paid')->get();
+    // ✅ فقط دیتا مربوط به همان سال
+    $orderYear = Paid::with(['student','department','subject','teacher'])
+        ->where('order_year', $years)
+        ->latest()
+        ->get();
+
+    // ✅ سایر دیتا (اگر نیاز داری)
+    $teacher = Teacher::with('department')
+    ->whereIn('id', Paid::where('order_year', $years)->pluck('teacher_id'))
+    ->get();
+    $expense = Expense::all();
     $stuff = Staf::all();
 
-    $orderYear = Paid::where('order_year',$years)->latest()->get();
-    return view('admin.reports.search_by_year',compact('orderYear', 'Paid' , 'expense' , 'stuff' , 'teacher' , 'years'));
+    return view('admin.reports.search_by_year', compact(
+        'orderYear',
+        'teacher',
+        'expense',
+        'stuff',
+        'years'
+    ));
 }
- // End Method
-
  public function AllInvoice($id)
  {
      $Paid = Paid::with('student' , 'subject' , 'department')->findOrFail($id);
