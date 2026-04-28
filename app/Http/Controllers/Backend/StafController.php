@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\Staf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -19,7 +20,10 @@ class StafController extends Controller
 
     public function ManageStaf()
     {
-        $stafs = Staf::all();
+        // $stafs = Staf::all();
+        $stafs = Cache::remember('stafs_list', 60, function () {
+            return Staf::all();
+        });
         return view('admin.staf.manage_staf', compact('stafs'));
     }
 
@@ -40,6 +44,10 @@ class StafController extends Controller
         }
 
         Staf::create($data);
+
+        // 🔥 پاک کردن cache
+        Cache::forget('stafs_list');
+
 
         $notification = [
             'message' => 'Staff Added Successfully',
@@ -76,6 +84,10 @@ class StafController extends Controller
 
         $staf->update($data);
 
+        // 🔥 پاک کردن cache
+        Cache::flush();
+
+
         $notification = [
             'message' => 'Staff Updated Successfully',
             'alert-type' => 'success'
@@ -90,10 +102,13 @@ class StafController extends Controller
         $staf = Staf::findOrFail($id);
         $staf->delete();
 
+        // 🔥 پاک کردن cache
+        Cache::flush();
+
         return redirect()->route('manage.staf')->with('success', 'Staff deleted successfully!');
     }
 
-  
+
     public function ViewStaf($id)
     {
         $staf = Staf::findOrFail($id);
